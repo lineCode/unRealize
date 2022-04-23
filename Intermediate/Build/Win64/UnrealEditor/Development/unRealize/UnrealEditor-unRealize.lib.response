@@ -3,10 +3,10 @@
 /MACHINE:x64
 /SUBSYSTEM:WINDOWS
 /DEF
-/NAME:"UnrealEditor-unRealize.dll"
+/NAME:"UnrealEditor-UnRealize.dll"
 /IGNORE:4221
 /NODEFAULTLIB
 "..\Intermediate\Build\Win64\UnrealEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
-"D:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\unRealize\unRealize.cpp.obj"
+"D:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\unRealize\Module.unRealize.cpp.obj"
 "..\Intermediate\Build\Win64\UnrealEditor\Development\Default.rc2.res"
 /OUT:"D:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\unRealize\UnrealEditor-unRealize.lib"

@@ -57,7 +57,7 @@
 #define UE_IS_ENGINE_MODULE 0
 #define UE_PROJECT_NAME Emilia
 #define UE_TARGET_NAME EmiliaEditor
-#define UE_MODULE_NAME "unRealize"
+#define UE_MODULE_NAME "UnRealize"
 #define UE_PLUGIN_NAME "unRealize"
 #define IMPLEMENT_ENCRYPTION_KEY_REGISTRATION() 
 #define IMPLEMENT_SIGNING_KEY_REGISTRATION() 
