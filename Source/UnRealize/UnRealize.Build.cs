@@ -9,13 +9,15 @@ public class UnRealize : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[]
 			{
-				"UnRealize/Private"
+				"UnRealize/Private",
 			});
-		
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core"
+				"Core",
+				"Libpqxx",
+				"Projects"
 			});
 			
 		
@@ -26,8 +28,7 @@ public class UnRealize : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"Projects",
-				"Libpqxx"
+				"Projects"
 			});
 	}
 }

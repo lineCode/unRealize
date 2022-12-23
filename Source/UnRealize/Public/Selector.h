@@ -1,20 +1,13 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "UnRealize.h"
 
 
 template <typename SelectedType>
 class UNREALIZE_API TSelector
 {
 public:
-	TSelector()
-	{
-	}
+	TSelector();
 
-	TArray<SelectedType> Get()
-	{
-		FUnRealize::Get();
-		return TArray<SelectedType>();
-	}
+	TSelector<SelectedType> Where(TArray<TTuple<FString, FString>> Conditions);
 };

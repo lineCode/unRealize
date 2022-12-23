@@ -106,3 +106,21 @@ void FPostgresAdapter::ExecuteStatement(const FString& Statement)
 		UE_LOG(LogTemp, Log, TEXT("Exception: %s"), *Exception);
 	}
 }
+
+const pqxx::result FPostgresAdapter::Query(const FString& Statement)
+{
+	try
+	{
+		pqxx::work Work(*Connection);
+		const pqxx::result Result = Work.exec(FStringUtility::ToStd(Statement));
+		Work.commit();
+		return Result;
+	}
+	catch (const std::exception& e)
+	{
+		const FString Exception = FString(e.what());
+		UE_LOG(LogTemp, Log, TEXT("Exception: %s"), *Exception);
+		throw e;
+		unimplemented()
+	}
+}

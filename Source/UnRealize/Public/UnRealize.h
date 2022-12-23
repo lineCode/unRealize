@@ -1,26 +1,28 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "UnRealize/Private/DatabaseAdapter.h"
 #include "UObject/Class.h"
+#include "UnRealize/Private/DatabaseAdapter.h"
 
 
-class UNREALIZE_API FUnRealize
+class FUnRealize
 {
 public:
 	static void Initialize();
 
 	static TSharedPtr<FUnRealize> Get();
 
-	template <typename T>
-	void Persist(const T& Entity)
-	{
-		const UStruct* Struct = T::StaticStruct();
-		const FString Statement = FString::Printf(TEXT("CREATE TABLE %s();"), *Struct->GetName());
-		Adapter->ExecuteStatement(Statement);
-	}
+	void Persist(const UStruct* StructType, const void* Struct) const;
 
-	void Persist(const UStruct* StructType, const void* Struct);
+	template<typename SelectedType>
+	TArray<SelectedType> FindMany(const UStruct* StructType) const;
+	
+	/* void Delete(const UStruct* StructType, const void* Struct) const;
+
+	template<typename SelectedType>
+	void Delete(const UStruct* StructType, TSelector<SelectedType> Selector) const; */
+
+	void RegisterTypes(const TArray<UStruct*> Types);
 
 protected:
 	bool LoadConfiguration();

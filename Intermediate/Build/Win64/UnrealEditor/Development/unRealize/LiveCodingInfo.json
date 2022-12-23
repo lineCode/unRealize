@@ -1,13 +1,15 @@
 {
 	"RemapUnityFiles": 
 	{
-		"Module.unRealize.cpp.obj": [
-			"DatabaseAdapter.cpp.obj",
+		"Module.UnRealize.cpp.obj": [
+			"InsertStatement.cpp.obj",
 			"PostgresAdapter.cpp.obj",
+			"QueryResult.cpp.obj",
+			"ReadStatement.cpp.obj",
 			"Selector.cpp.obj",
 			"StringUtility.cpp.obj",
-			"UnRealize.cpp.obj",
-			"UnRealizeModule.cpp.obj"
+			"UnRealizeModule.cpp.obj",
+			"UnRealize.cpp.obj"
 		]
 	}
 }
