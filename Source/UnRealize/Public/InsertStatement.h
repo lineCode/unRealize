@@ -8,10 +8,10 @@ public:
 	
 	FString Formulate() const;
 
-	void AddValue(const FString& Name, const FString& Value);
+	void AddValue(const FString& Name, const struct FSqlProperty& Value);
 
 private:
 	FString TableName;
 	
-	TArray<TTuple<FString, FString>> Values;
+	TArray<TTuple<FString, FSqlProperty>> Values;
 };

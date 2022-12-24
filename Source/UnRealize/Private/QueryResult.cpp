@@ -1,1 +1,3 @@
 ﻿#include "QueryResult.h"
+
+

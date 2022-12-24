@@ -1,5 +1,7 @@
 ﻿#include "InsertStatement.h"
 
+#include "../Public/SqlProperty.h"
+
 
 FInsertStatement::FInsertStatement(const FString& TableName)
 {
@@ -16,14 +18,14 @@ FString FInsertStatement::Formulate() const
 	{
 		const FString Separator = i == Values.Num() - 1 ? TEXT(")") : TEXT(", ");
 		KeyStatement.Appendf(TEXT("\"%s\"%s"), *Values[i].Key, *Separator);
-		ValueStatement.Appendf(TEXT("'%s'%s"), *Values[i].Value, *Separator);
+		ValueStatement.Appendf(TEXT("%s%s"), *Values[i].Value.GetSqlLiteral(), *Separator);
 	}
 
 	return KeyStatement.Appendf(TEXT(" %s"), *ValueStatement);
 }
 
 
-void FInsertStatement::AddValue(const FString& Name, const FString& Value)
+void FInsertStatement::AddValue(const FString& Name, const FSqlProperty& Value)
 {
-	Values.Add(TTuple<FString, FString>(Name, Value));
+	Values.Add(TTuple<FString, FSqlProperty>(Name, Value));
 }

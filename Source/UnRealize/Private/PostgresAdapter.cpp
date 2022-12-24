@@ -36,6 +36,9 @@
 
 #include <pqxx/pqxx>
 
+#include "FQueryField.h"
+#include "FQueryRow.h"
+#include "QueryResult.h"
 #include "StringUtility.h"
 #include "Interfaces/IPluginManager.h"
 
@@ -107,14 +110,28 @@ void FPostgresAdapter::ExecuteStatement(const FString& Statement)
 	}
 }
 
-const pqxx::result FPostgresAdapter::Query(const FString& Statement)
+const FQueryResult FPostgresAdapter::Query(const FString& Statement)
 {
 	try
 	{
 		pqxx::work Work(*Connection);
 		const pqxx::result Result = Work.exec(FStringUtility::ToStd(Statement));
 		Work.commit();
-		return Result;
+		FQueryResult QueryResult;
+		for(const pqxx::row& Row : Result)
+		{
+			FQueryRow QueryRow;
+			for(const pqxx::field& Field : Row)
+			{
+				FQueryField QueryField;
+				QueryField.TableName = FStringUtility::FromStd(std::to_string(Field.table()));
+				QueryField.ColumnName = FString(Field.name());
+				QueryField.StringValue = FString(Field.c_str());
+				QueryRow.Fields.Add(QueryField);
+			}
+			QueryResult.Rows.Add(QueryRow);
+		}
+		return QueryResult;
 	}
 	catch (const std::exception& e)
 	{

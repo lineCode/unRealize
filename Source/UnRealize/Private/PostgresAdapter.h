@@ -14,7 +14,7 @@ public:
 
 	virtual void ExecuteStatement(const FString& Statement) override;
 
-	virtual const pqxx::result Query(const FString& Statement) override;
+	virtual const struct FQueryResult Query(const FString& Statement) override;
 
 protected:
 	bool Connect();

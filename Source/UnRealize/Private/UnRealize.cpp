@@ -3,6 +3,7 @@
 #include "InsertStatement.h"
 #include "UnRealize/Private/PostgresAdapter.h"
 #include "ReadStatement.h"
+#include "SqlProperty.h"
 #include "Interfaces/IPluginManager.h"
 #include "Misc/Paths.h"
 
@@ -52,7 +53,8 @@ void FUnRealize::Persist(const UStruct* StructType, const void* Struct) const
 			{
 				PersistFieldAs = Property->GetName();
 			}
-			Statement.AddValue(PersistFieldAs, *Property->ContainerPtrToValuePtr<FString>(Struct));
+			const FSqlProperty SqlProperty(Property, Struct);
+			Statement.AddValue(PersistFieldAs, SqlProperty);
 		}
 	}
 
@@ -60,7 +62,7 @@ void FUnRealize::Persist(const UStruct* StructType, const void* Struct) const
 }
 
 
-template<typename SelectedType>
+/*template<typename SelectedType>
 TArray<SelectedType> FUnRealize::FindMany(const UStruct* StructType) const
 {
 	FString PersistedAs = StructType->GetMetaData(TEXT("PersistAs"));
@@ -86,7 +88,7 @@ TArray<SelectedType> FUnRealize::FindMany(const UStruct* StructType) const
 	}
 		
 	return QueryResult;
-}
+}*/
 
 
 /* void FUnRealize::Delete(const UStruct* StructType, const void* Struct) const

@@ -270,11 +270,11 @@ E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build
 /I Runtime\MovieSceneCapture\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController\UHT
 /I Developer\AnimationDataController\Public
-/I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source
-/I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\UnRealize\Public
 /I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\ThirdParty
 /I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\ThirdParty\Libpqxx
 /I ThirdParty\OpenSSL\1.1.1n\include\Win64\VS2015
+/I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source
+/I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\UnRealize\Public
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source
@@ -287,8 +287,8 @@ E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build
 /FI"E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\UnRealize\Definitions.UnRealize.h"
 /Yu"..\Intermediate\Build\Win64\UnrealEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h"
 /Fp"..\Intermediate\Build\Win64\UnrealEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.pch"
-/Fo"E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\UnRealize\Module.UnRealize.cpp.obj"
-/sourceDependencies E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\UnRealize\Module.UnRealize.cpp.dep.json
+/Fo"E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\UnRealize\Module.UnRealize.cpp.lc.obj"
+/sourceDependencies"E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Development\UnRealize\Module.UnRealize.cpp.dep.lc.json"
 /Zc:inline
 /nologo
 /Oi

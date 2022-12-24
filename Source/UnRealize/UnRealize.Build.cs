@@ -28,6 +28,7 @@ public class UnRealize : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"Libpqxx",
 				"Projects"
 			});
 	}

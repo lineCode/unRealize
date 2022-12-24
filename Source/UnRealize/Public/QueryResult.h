@@ -2,7 +2,5 @@
 
 struct FQueryResult
 {
-	unsigned long AffectedRows;
-
-	
+	TArray<struct FQueryRow> Rows;
 };
