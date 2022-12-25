@@ -58,7 +58,7 @@ void FUnRealizeTests::Define()
 
 			const FSampleEntityWithAllTypes ReadEntity = FUnRealize::Get()->FindUnique<FSampleEntityWithAllTypes>(
 				FSampleEntityWithAllTypes::StaticStruct(),
-				FSelector().Where(FSqlCondition::Equals("Id", FSqlProperty(Entity.Id))));
+				FSelector().Where(FSqlCondition::Equals("Id", FSqlProperty(Entity.Id)))).GetValue();
 
 			TestEqual(TEXT("String is unequal"), Entity.Id, ReadEntity.Id);
 			TestEqual(TEXT("Boolean is unequal"), Entity.SampleBoolean, ReadEntity.SampleBoolean);

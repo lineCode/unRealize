@@ -41,7 +41,7 @@ public:
 	}
 
 	template<typename SelectedType>
-	FORCEINLINE SelectedType FindUnique(const UStruct* StructType, const FSelector& Selector) const
+	FORCEINLINE TOptional<SelectedType> FindUnique(const UStruct* StructType, const FSelector& Selector) const
 	{
 		const FString PersistedAs = FStructUtility::GetPersistedName(StructType);
 		const FReadStatement Statement(PersistedAs);
@@ -49,16 +49,24 @@ public:
 		const FQueryResult Result = Adapter->Query(Statement.Formulate(Selector));
 		if(Result.Rows.Num() != 1)
 		{
-			LOG_ERROR_PRINTF(LogUnRealize, "FindUnique found a number of matches that unequals 1.");
+			LOG_ERROR(LogUnRealize, "FindUnique found a number of matches that unequals 1.");
+			return TOptional<SelectedType>();
 		}
-		return ConstructStructFromQueryRow<SelectedType>(StructType, Result.Rows[0]);
+		return TOptional(ConstructStructFromQueryRow<SelectedType>(StructType, Result.Rows[0]));
 	}
 
 	template<typename SelectedType>
-	FORCEINLINE SelectedType FindFirst()
+	FORCEINLINE TOptional<SelectedType> FindFirst(const UStruct* StructType, const FSelector& Selector) const
 	{
-		unimplemented();
-		return SelectedType();
+		const FString PersistedAs = FStructUtility::GetPersistedName(StructType);
+		const FReadStatement Statement(PersistedAs);
+
+		const FQueryResult Result = Adapter->Query(Statement.Formulate(Selector));
+		if(Result.Rows.Num() == 0)
+		{
+			return TOptional<SelectedType>();
+		}
+		return TOptional(ConstructStructFromQueryRow<SelectedType>(StructType, Result.Rows[0]));
 	}
 
 	template<typename SelectedType>
@@ -68,7 +76,7 @@ public:
 		const FProperty* PrimaryKey = FPropertyUtility::FindPrimaryKeyProperty(StructType);
 		if(PrimaryKey == nullptr)
 		{
-			checkf("No primary key defined for %s. Please add a meta = (PrimaryKey) specifier to one of the struct's properties.", *PersistedAs);
+			LOG_ERROR_PRINTF(LogUnRealize, "No primary key defined for %s. Please add a meta = (PrimaryKey) specifier to one of the struct's properties.", *PersistedAs);
 		}
 		FUpdateStatement Statement(PersistedAs);
 		FSelector Selector;
@@ -81,6 +89,10 @@ public:
 	FORCEINLINE void Delete(const UStruct* StructType, const SelectedType* Struct) const
 	{
 		const FProperty* PrimaryKey = FPropertyUtility::FindPrimaryKeyProperty(StructType);
+		if(PrimaryKey == nullptr)
+		{
+			LOG_ERROR(LogUnRealize, "No primary key defined. Please add a meta = (PrimaryKey) specifier to one of the struct's properties.");
+		}
 		FSelector Selector;
 		Selector.Where(FSqlCondition::Equals(FPropertyUtility::GetPersistedName(PrimaryKey), FSqlProperty::FromProperty(PrimaryKey, Struct)));
 
@@ -98,6 +110,8 @@ public:
 
 		Adapter->ExecuteStatement(Statement.Formulate(Selector));
 	}
+
+	int64 Count(const UStruct* StructType, const FSelector& Selector) const;
 
 	void ExecuteStatement(const FString& Statement) const;
 

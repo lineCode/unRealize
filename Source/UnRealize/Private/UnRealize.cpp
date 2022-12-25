@@ -53,6 +53,12 @@ void FUnRealize::Persist(const UStruct* StructType, const void* Struct) const
 }
 
 
+int64 FUnRealize::Count(const UStruct* StructType, const FSelector& Selector) const
+{
+	return 0;
+}
+
+
 void FUnRealize::ExecuteStatement(const FString& Statement) const
 {
 	Adapter->ExecuteStatement(Statement);
