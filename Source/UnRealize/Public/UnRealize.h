@@ -34,17 +34,7 @@ public:
 		TArray<SelectedType> QueryResult;
 		for(const FQueryRow& Row : Result.Rows)
 		{
-			SelectedType Object;
-			for(const FQueryField& Field : Row.Fields)
-			{
-				const FProperty* Property = FPropertyUtility::FindPropertyByPersistedName(StructType, Field.ColumnName);
-				if(Property != nullptr)
-				{
-					Property->SetValue_InContainer(&Object, Field.Value.Get());
-				}
-			}
-		
-			QueryResult.Add(Object);
+			QueryResult.Add(ConstructStructFromQueryRow<SelectedType>(StructType, Row));
 		}
 		
 		return QueryResult;
@@ -53,8 +43,15 @@ public:
 	template<typename SelectedType>
 	FORCEINLINE SelectedType FindUnique(const UStruct* StructType, const FSelector& Selector) const
 	{
-		unimplemented();
-		return SelectedType();
+		const FString PersistedAs = FStructUtility::GetPersistedName(StructType);
+		const FReadStatement Statement(PersistedAs);
+
+		const FQueryResult Result = Adapter->Query(Statement.Formulate(Selector));
+		if(Result.Rows.Num() != 1)
+		{
+			LOG_ERROR_PRINTF(LogUnRealize, "FindUnique found a number of matches that unequals 1.");
+		}
+		return ConstructStructFromQueryRow<SelectedType>(StructType, Result.Rows[0]);
 	}
 
 	template<typename SelectedType>
@@ -71,7 +68,7 @@ public:
 		const FProperty* PrimaryKey = FPropertyUtility::FindPrimaryKeyProperty(StructType);
 		if(PrimaryKey == nullptr)
 		{
-			LOG_ERROR_PRINTF(LogUnRealize, "No primary key defined for %s. Please add a meta = (PrimaryKey) specifier to one of the struct's properties.", *PersistedAs);
+			checkf("No primary key defined for %s. Please add a meta = (PrimaryKey) specifier to one of the struct's properties.", *PersistedAs);
 		}
 		FUpdateStatement Statement(PersistedAs);
 		FSelector Selector;
@@ -102,10 +99,29 @@ public:
 		Adapter->ExecuteStatement(Statement.Formulate(Selector));
 	}
 
+	void ExecuteStatement(const FString& Statement) const;
+
+	FQueryResult Query(const FString& Statement) const;
+	
 protected:
 	bool LoadConfiguration();
 	
 private:
+	template<typename Type>
+	Type ConstructStructFromQueryRow(const UStruct* StructType, const FQueryRow& Row) const
+	{
+		Type Object;
+		for(const FQueryField& Field : Row.Fields)
+		{
+			const FProperty* Property = FPropertyUtility::FindPropertyByPersistedName(StructType, Field.ColumnName);
+			if(Property != nullptr)
+			{
+				Property->SetValue_InContainer(&Object, Field.Value.Get());
+			}
+		}
+		return Object;
+	}
+	
 	static TSharedPtr<FUnRealize> UnRealize;
 
 	TSharedPtr<FDatabaseAdapter> Adapter;

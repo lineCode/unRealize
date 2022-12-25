@@ -91,7 +91,7 @@ bool FPostgresAdapter::Connect()
 	catch (const std::exception& e)
 	{
 		const FString Exception = FString(e.what());
-		UE_LOG(LogTemp, Error, TEXT("Exception: %s"), *Exception);
+		LOG_ERROR_PRINTF(LogUnRealize, "Libpqxx exception: %s", *Exception);
 	}
 	return false;
 }
@@ -103,13 +103,20 @@ void FPostgresAdapter::ExecuteStatement(const FString& Statement)
 	{
 		LOG_PRINTF(LogUnRealize, "Execute SQL statement: %s", *Statement);
 		pqxx::work Work(*Connection);
-		Work.exec(FStringUtility::ToStd(Statement));
+		const pqxx::result Res = Work.exec(FStringUtility::ToStd(Statement));
+		for(const pqxx::row& Row : Res)
+		{
+			for(const pqxx::field& Field : Row)
+			{
+				LOG(LogUnRealize, Field.c_str());
+			}
+		}
 		Work.commit();
 	}
 	catch (const std::exception& e)
 	{
 		const FString Exception = FString(e.what());
-		UE_LOG(LogTemp, Log, TEXT("Exception: %s"), *Exception);
+		LOG_ERROR_PRINTF(LogUnRealize, "Libpqxx exception: %s", *Exception);
 	}
 }
 
@@ -136,8 +143,7 @@ const FQueryResult FPostgresAdapter::Query(const FString& Statement)
 	catch (const std::exception& e)
 	{
 		const FString Exception = FString(e.what());
-		UE_LOG(LogTemp, Log, TEXT("Exception: %s"), *Exception);
+		LOG_ERROR_PRINTF(LogUnRealize, "Libpqxx exception: %s", *Exception);
 		throw e;
-		unimplemented()
 	}
 }

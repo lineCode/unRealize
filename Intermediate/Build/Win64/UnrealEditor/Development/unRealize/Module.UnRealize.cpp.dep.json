@@ -6,6 +6,10 @@
         "PCH": "e:\\programs\\engine\\source\\ue_5.1\\unrealengine\\engine\\intermediate\\build\\win64\\unrealeditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
         "Includes": [
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\intermediate\\build\\win64\\unrealeditor\\development\\unrealize\\definitions.unrealize.h",
+            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\intermediate\\build\\win64\\unrealeditor\\inc\\unrealize\\uht\\samplemodel.gen.cpp",
+            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\test\\samplemodel.h",
+            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\intermediate\\build\\win64\\unrealeditor\\inc\\unrealize\\uht\\samplemodel.generated.h",
+            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\intermediate\\build\\win64\\unrealeditor\\inc\\unrealize\\uht\\unrealize.init.gen.cpp",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\deletestatement.cpp",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\public\\deletestatement.h",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\public\\selector.h",
@@ -329,12 +333,12 @@
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\sqlproperty.cpp",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\stringutility.cpp",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\structutility.cpp",
-            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\tests.cpp",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\unrealize.cpp",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\public\\unrealize.h",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\public\\updatestatement.h",
             "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\unrealizemodule.cpp",
-            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\updatestatement.cpp"
+            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\private\\updatestatement.cpp",
+            "e:\\pandoraaeternitas\\projects\\emilia\\emilia\\plugins\\unrealize\\source\\unrealize\\test\\tests.cpp"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

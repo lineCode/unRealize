@@ -273,6 +273,7 @@ E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build
 /I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\ThirdParty
 /I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\ThirdParty\Libpqxx
 /I ThirdParty\OpenSSL\1.1.1n\include\Win64\VS2015
+/I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Intermediate\Build\Win64\UnrealEditor\Inc\UnRealize\UHT
 /I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source
 /I E:\PandoraAeternitas\Projects\Emilia\Emilia\Plugins\unRealize\Source\UnRealize\Public
 /I ThirdParty\mimalloc\include

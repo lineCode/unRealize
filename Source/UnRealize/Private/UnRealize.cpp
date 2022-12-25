@@ -53,6 +53,18 @@ void FUnRealize::Persist(const UStruct* StructType, const void* Struct) const
 }
 
 
+void FUnRealize::ExecuteStatement(const FString& Statement) const
+{
+	Adapter->ExecuteStatement(Statement);
+}
+
+
+FQueryResult FUnRealize::Query(const FString& Statement) const
+{
+	return Adapter->Query(Statement);
+}
+
+
 bool FUnRealize::LoadConfiguration()
 {
 	const FString BaseDirectory = IPluginManager::Get().FindPlugin(TEXT("unRealize"))->GetBaseDir();
