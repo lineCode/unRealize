@@ -1,5 +1,7 @@
 ﻿#include "ReadStatement.h"
 
+#include "Selector.h"
+
 
 FReadStatement::FReadStatement(const FString& TableName)
 {
@@ -7,9 +9,8 @@ FReadStatement::FReadStatement(const FString& TableName)
 }
 
 
-FString FReadStatement::Formulate() const
+FString FReadStatement::Formulate(const FSelector& Selector) const
 {
-	FString SelectStatement = TEXT("SELECT * FROM ");
-	SelectStatement.Appendf(TEXT("\"%s\";"), *TableName);
+	FString SelectStatement = FString::Printf(TEXT("SELECT %s FROM \"%s\";"), *Selector.GetSelectClause(), *TableName);
 	return SelectStatement;
 }

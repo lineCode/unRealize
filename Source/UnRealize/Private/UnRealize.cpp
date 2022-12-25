@@ -2,7 +2,6 @@
 
 #include "InsertStatement.h"
 #include "UnRealize/Private/PostgresAdapter.h"
-#include "ReadStatement.h"
 #include "SqlProperty.h"
 #include "Interfaces/IPluginManager.h"
 #include "Misc/Paths.h"
@@ -16,10 +15,10 @@ void FUnRealize::Initialize()
 	if(UnRealize == nullptr)
 	{
 		UnRealize = MakeShareable(new FUnRealize);
-		bool bWasSuccessful = UnRealize->LoadConfiguration();
+		const bool bWasSuccessful = UnRealize->LoadConfiguration();
 		if(!bWasSuccessful)
 		{
-			
+			LOG_ERROR(LogUnRealize, "Either the configuration is incomplete or it uses a unimplemented DBMS.");
 		}
 	}
 }
@@ -37,84 +36,20 @@ TSharedPtr<FUnRealize> FUnRealize::Get()
 
 void FUnRealize::Persist(const UStruct* StructType, const void* Struct) const
 {
-	FString PersistAs = StructType->GetMetaData(TEXT("PersistAs"));
-	if(PersistAs == TEXT(""))
-	{
-		PersistAs = StructType->GetName();
-	}
+	const FString PersistAs = FStructUtility::GetPersistedName(StructType);
 	FInsertStatement Statement(PersistAs);
 	for(TFieldIterator<FProperty> PropertyIterator(StructType); PropertyIterator; ++PropertyIterator)
 	{
 		const FProperty* Property = *PropertyIterator;
 		if(!Property->HasMetaData(TEXT("IgnorePersist")))
 		{
-			FString PersistFieldAs = Property->GetMetaData(TEXT("PersistAs"));
-			if(PersistFieldAs == TEXT(""))
-			{
-				PersistFieldAs = Property->GetName();
-			}
-			const FSqlProperty SqlProperty(Property, Struct);
+			FString PersistFieldAs = FPropertyUtility::GetPersistedName(Property);
+			const FSqlProperty SqlProperty = FSqlProperty::FromProperty(Property, Struct);
 			Statement.AddValue(PersistFieldAs, SqlProperty);
 		}
 	}
 
 	Adapter->ExecuteStatement(Statement.Formulate());
-}
-
-
-/*template<typename SelectedType>
-TArray<SelectedType> FUnRealize::FindMany(const UStruct* StructType) const
-{
-	FString PersistedAs = StructType->GetMetaData(TEXT("PersistAs"));
-	if(PersistedAs == TEXT(""))
-	{
-		PersistedAs = StructType->GetName();
-	}
-	const FReadStatement Statement(PersistedAs);
-
-	const pqxx::result Result = Adapter->Query(Statement.Formulate());
-	TArray<SelectedType> QueryResult;
-	for(const pqxx::row& Row : Result)
-	{
-		SelectedType Object;
-		for(const pqxx::field& Field : Row)
-		{
-			const FProperty* Property = StructType->FindPropertyByName(Field.name());
-			const FString Value = FString(Field.c_str());
-			Property->SetValue_InContainer(&Object, &Value);
-		}
-		
-		QueryResult.Add(Object);
-	}
-		
-	return QueryResult;
-}*/
-
-
-/* void FUnRealize::Delete(const UStruct* StructType, const void* Struct) const
-{
-	
-}
-
-
-template <typename SelectedType>
-void FUnRealize::Delete(const UStruct* StructType, TSelector<SelectedType> Selector) const
-{
-} */
-
-
-void FUnRealize::RegisterTypes(const TArray<UStruct*> Types)
-{
-	if (Adapter == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No Adapter was initialized"));
-		return;
-	}
-	for (const UStruct* Type : Types)
-	{
-		
-		UE_LOG(LogTemp, Log, TEXT("Name: %s"), *(Type->GetMetaData(TEXT("PersistanceName"))));
-	}
 }
 
 
@@ -130,6 +65,7 @@ bool FUnRealize::LoadConfiguration()
 	else
 	{
 		unimplemented();
+		return false;
 	}
 	return true;
 }

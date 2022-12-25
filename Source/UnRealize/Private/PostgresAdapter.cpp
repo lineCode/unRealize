@@ -36,11 +36,13 @@
 
 #include <pqxx/pqxx>
 
-#include "FQueryField.h"
-#include "FQueryRow.h"
+#include "QueryField.h"
+#include "QueryRow.h"
 #include "QueryResult.h"
 #include "StringUtility.h"
+#include "UnRealizeModule.h"
 #include "Interfaces/IPluginManager.h"
+#include "LogMacros/LogMacros.h"
 
 
 TSharedPtr<FPostgresAdapter> FPostgresAdapter::SingletonAdapter = nullptr;
@@ -99,6 +101,7 @@ void FPostgresAdapter::ExecuteStatement(const FString& Statement)
 {
 	try
 	{
+		LOG_PRINTF(LogUnRealize, "Execute SQL statement: %s", *Statement);
 		pqxx::work Work(*Connection);
 		Work.exec(FStringUtility::ToStd(Statement));
 		Work.commit();
@@ -114,6 +117,7 @@ const FQueryResult FPostgresAdapter::Query(const FString& Statement)
 {
 	try
 	{
+		LOG_PRINTF(LogUnRealize, "Execute SQL statement: %s", *Statement);
 		pqxx::work Work(*Connection);
 		const pqxx::result Result = Work.exec(FStringUtility::ToStd(Statement));
 		Work.commit();
@@ -123,11 +127,7 @@ const FQueryResult FPostgresAdapter::Query(const FString& Statement)
 			FQueryRow QueryRow;
 			for(const pqxx::field& Field : Row)
 			{
-				FQueryField QueryField;
-				QueryField.TableName = FStringUtility::FromStd(std::to_string(Field.table()));
-				QueryField.ColumnName = FString(Field.name());
-				QueryField.StringValue = FString(Field.c_str());
-				QueryRow.Fields.Add(QueryField);
+				QueryRow.Fields.Add(FQueryField::FromPqxxField(Field));
 			}
 			QueryResult.Rows.Add(QueryRow);
 		}

@@ -1,10 +1,12 @@
 #include "UnRealizeModule.h"
 
 #include "UnRealize.h"
-#include "Misc/MessageDialog.h"
 
 
 #define LOCTEXT_NAMESPACE "FUnRealizeModule"
+
+
+DEFINE_LOG_CATEGORY(LogUnRealize);
 
 
 void FUnRealizeModule::StartupModule()

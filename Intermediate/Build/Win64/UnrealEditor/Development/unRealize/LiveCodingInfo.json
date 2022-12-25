@@ -2,17 +2,23 @@
 	"RemapUnityFiles": 
 	{
 		"Module.UnRealize.cpp.obj": [
-			"FQueryField.cpp.obj",
-			"FQueryRow.cpp.obj",
+			"DeleteStatement.cpp.obj",
 			"InsertStatement.cpp.obj",
 			"PostgresAdapter.cpp.obj",
+			"PropertyUtility.cpp.obj",
+			"QueryField.cpp.obj",
 			"QueryResult.cpp.obj",
+			"QueryRow.cpp.obj",
 			"ReadStatement.cpp.obj",
 			"Selector.cpp.obj",
+			"SqlCondition.cpp.obj",
+			"SqlProperty.cpp.obj",
 			"StringUtility.cpp.obj",
+			"StructUtility.cpp.obj",
+			"Tests.cpp.obj",
 			"UnRealize.cpp.obj",
 			"UnRealizeModule.cpp.obj",
-			"SqlProperty.cpp.obj"
+			"UpdateStatement.cpp.obj"
 		]
 	}
 }
